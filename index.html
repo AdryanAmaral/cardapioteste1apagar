@@ -45,6 +45,7 @@
 		}
 
 		.select {
+			width: 100%;
 		  display: grid;
 		  grid-template-areas: "select";
 		  align-items: center;
@@ -95,7 +96,7 @@
 		*{padding:0;margin:0;}
 		p{
 			font-family: 'Lato', sans-serif;
-			font-size: 14px;
+			font-size: 12px;
 		}
 		.cardapio{
 			padding: 20px 0px;
@@ -103,9 +104,16 @@
 			height: fit-content;
 			background: #f2f2f2;
 		}
-		.cardapio_section{
+		.cardapio_section_2{
 			display: grid;
 			grid-template-columns: 55% 15% 15% 15%;
+			margin-bottom: 5px;
+			padding: 0px 0px;
+			color: #bf1d1d;
+		}
+		.cardapio_section{
+			display: grid;
+			grid-template-columns: 55% 30% 15%;
 			margin-bottom: 5px;
 			padding: 0px 0px;
 			color: #bf1d1d;
@@ -113,9 +121,17 @@
 		.section_margim{
 			margin-bottom: 40px !important;
 		}
-		.item_div{
+		.item_div_2{
 			display: grid;
 			grid-template-columns: 10% 45% 15% 15% 15%;
+			margin-bottom: 10px;
+			padding: 5px 10px;
+			border-bottom: 2px solid #c2c2c2;
+			border-style: hidden hidden dotted hidden;
+		}
+		.item_div{
+			display: grid;
+			grid-template-columns: 10% 45% 30% 15%;
 			margin-bottom: 10px;
 			padding: 5px 10px;
 			border-bottom: 2px solid #c2c2c2;
@@ -133,7 +149,7 @@
 
 		}
 		.item_desc{
-			font-size: 10px;
+			font-size: 9px;
 			color: #454545;
 		}
 		.unidade_div{
@@ -212,6 +228,11 @@
 			margin-left: auto;
 		}
 
+		.checkbox{
+			width: 13px;
+			height: 13px;
+		}
+
 
 
 	</style>
@@ -226,7 +247,7 @@
 			<div class="selection_box">
 				<!--cb=checkbox
 					ys=yakissoba-->
-				<input type="checkbox" id="cb_ys_misto" onclick="myFunction()">
+				<input class="checkbox" type="checkbox" id="cb_ys_misto" onclick="myFunction()">
 			</div>
 			<div class="item">
 				<p class="item_title">MISTO</p>
@@ -527,7 +548,7 @@
 			</div>
 		</div>
 
-		<div class="hotsushi_section cardapio_section">
+		<div class="hotsushi_section cardapio_section_2">
 			<!--<div></div>-->
 			<p style="margin-left: 3%;">HOT SUSHI</p>
 			<p>PEÇAS</p>
@@ -536,7 +557,7 @@
 			
 		</div>
 
-		<div class="item_div">
+		<div class="item_div_2">
 			<div class="selection_box">
 				<!--cb=checkbox
 					hs=hot sushi
@@ -583,7 +604,7 @@
 			</div>
 		</div>
 
-		<div class="item_div">
+		<div class="item_div_2">
 			<div class="selection_box">
 				<!--cb=checkbox
 					hs=hot sushi
@@ -630,7 +651,7 @@
 			</div>
 		</div>
 
-		<div class="item_div">
+		<div class="item_div_2">
 			<div class="selection_box">
 				<!--cb=checkbox
 					hs=hot sushi
