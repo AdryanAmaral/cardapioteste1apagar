@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Cardápio - Adryan Amaral</title>
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Lato:wght@900&family=Readex+Pro:wght@300;500&family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+</head>
+<body>
+	<style type="text/css">
+		*,
+		*::before,
+		*::after {
+		  box-sizing: border-box;
+		}
+
+		:root {
+		  --select-border: #777;
+		  --select-focus: blue;
+		  --select-arrow: var(--select-border);
+		}
+
+		select {
+		  // A reset of styles, including removing the default dropdown arrow
+		  appearance: none;
+		  background-color: transparent;
+		  border: none;
+		  padding: 0 0 0 0;
+		  margin: 0;
+		  width: 100%;
+
+		  // Stack above custom arrow
+		  z-index: 1;
+
+		  // Remove dropdown arrow in IE10 & IE11
+		  // @link https://www.filamentgroup.com/lab/select-css.html
+		  &::-ms-expand {
+		    display: none;
+		  }
+
+		  // Remove focus outline, will add on alternate element
+		  outline: none;
+		}
+
+		.select {
+		  display: grid;
+		  grid-template-areas: "select";
+		  align-items: center;
+		  position: relative;
+
+		  select,
+		  &::after {
+		    grid-area: select;
+		  }
+
+		  min-width: 15ch;
+		  max-width: 30ch;
+
+		  border: 1px solid var(--select-border);
+		  border-radius: 0.25em;
+		  padding: 0.25em 0.5em;
+
+		  font-size: 1.25rem;
+		  cursor: pointer;
+		  line-height: 1.1;
+
+		  // Optional styles
+		  // remove for transparency
+		  background-color: #fff;
+		  background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
+
+		  // Custom arrow
+		  &:not(.select--multiple)::after {
+		    content: "";
+		    justify-self: end;
+		    width: 0.8em;
+		    height: 0.5em;
+		    background-color: var(--select-arrow);
+		    clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+		  }
+		}
+
+		// Interim solution until :focus-within has better support
+		select:focus + .focus {
+		  position: absolute;
+		  top: -1px;
+		  left: -1px;
+		  right: -1px;
+		  bottom: -1px;
+		  border: 2px solid var(--select-focus);
+		  border-radius: inherit;
+		}
+		*{padding:0;margin:0;}
+		p{
+			font-family: 'Lato', sans-serif;
+			font-size: 14px;
+		}
+		.cardapio{
+			padding: 20px 0px;
+			width: 100%;
+			height: fit-content;
+			background: #f2f2f2;
+		}
+		.cardapio_section{
+			display: grid;
+			grid-template-columns: 55% 15% 15% 15%;
+			margin-bottom: 5px;
+			padding: 0px 0px;
+			color: #bf1d1d;
+		}
+		.section_margim{
+			margin-bottom: 40px !important;
+		}
+		.item_div{
+			display: grid;
+			grid-template-columns: 10% 45% 15% 15% 15%;
+			margin-bottom: 10px;
+			padding: 5px 10px;
+			border-bottom: 2px solid #c2c2c2;
+			border-style: hidden hidden dotted hidden;
+		}
+		.selection_box{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.item{
+			align-items: center;
+		}
+		.item_title{
+
+		}
+		.item_desc{
+			font-size: 10px;
+			color: #454545;
+		}
+		.unidade_div{
+			display: flex;
+			
+			align-items: center;
+		}
+		.pecas_div{
+			display: flex;
+			
+			align-items: center;
+		}
+		.value_div{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.value{
+			color: #bf1d1d;
+		}
+		.pedido_button{
+
+		}
+		.dados{
+			padding: 20px;
+			background: #171717;
+			display: flex;
+			justify-content: center;
+		}
+		.caixa_texto {
+		  width: 300px;
+		  padding: 12px 20px;
+		  margin: 2px 0px 10px 0px;
+		  border: 0px solid #ccc;
+		  background: #8f8f8f;
+		  border-radius: 4px;
+		  box-sizing: border-box;
+		}
+		::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+		  color: #c2c2c2;
+		  opacity: 1; /* Firefox */
+		}
+
+		:-ms-input-placeholder { /* Internet Explorer 10-11 */
+		  color: #c2c2c2;
+		}
+
+		::-ms-input-placeholder { /* Microsoft Edge */
+		  color: #c2c2c2;
+		}
+
+		.desc_caixa_texto {
+			font-family: 'Lato', sans-serif;
+			font-size: 14px;
+			color: #ededed;
+			display:block;
+		}
+
+		.pedido_button {
+		  width: 200px;
+		  background-color: #bf1d1d;
+		  color: #ededed;
+		  padding: 14px 20px;
+		  margin: 8px auto;
+		  border: none;
+		  border-radius: 4px;
+		  cursor: pointer;
+		}
+
+		.pedido_buttonDESKTOP:hover {
+		  background-color: #45a049;
+		}
+
+		.pedido_div{
+			margin-right: auto;
+			margin-left: auto;
+		}
+
+
+
+	</style>
+	<div class="cardapio">
+		<div class="yakissoba_section cardapio_section">
+			<p style="margin-left: 3%;">YAKISSOBA</p>
+			<p>UNID</p>
+			<p>VALOR</p>
+			
+		</div>
+		<div class="item_div">
+			<div class="selection_box">
+				<!--cb=checkbox
+					ys=yakissoba-->
+				<input type="checkbox" id="cb_ys_misto" onclick="myFunction()">
+			</div>
+			<div class="item">
+				<p class="item_title">MISTO</p>
+				<p class="item_desc">macarrão, acelga, brócolis, cenoura, pimentão vermelho ou amarelo, cebola, molho especial e carne</p>
+			</div>
+			<div class="unidade_div">
+				<!-- quantity dropdown -->
+				<div class="select">
+				  <select id="dd_ys_misto">
+				    <option value="1" selected="selected">1</option>
+				    <option value="2">2</option>
+				    <option value="3">3</option>
+				    <option value="4">4</option>
+				    <option value="5">5</option>
+				    <option value="6">6</option>
+				    <option value="7">7</option>
+				    <option value="8">8</option>
+				    <option value="9">9</option>
+				    <option value="10">10</option>
+				  </select>
+				  <span class="focus"></span>
+				</div>
+			</div>
+			<div class="value_div">
+				<p class="value">R$ 44,00</p>
+			</div>
+		</div>
+
+		<div class="item_div">
+			<div class="selection_box">
+				<!--cb=checkbox
+					ys=yakissoba-->
+				<input type="checkbox" id="cb_ys_boi" onclick="myFunction()">
+			</div>
+			<div class="item">
+				<p class="item_title">BOI</p>
+				<p class="item_desc">macarrão, acelga, brócolis, cenoura, pimentão vermelho ou amarelo, cebola, molho especial e carne de 1ª</p>
+			</div>
+			<div class="unidade_div">
+				<!-- quantity dropdown -->
+				<div class="select">
+				  <select id="dd_ys_boi">
+				    <option value="1" selected="selected">1</option>
+				    <option value="2">2</option>
+				    <option value="3">3</option>
+				    <option value="4">4</option>
+				    <option value="5">5</option>
+				    <option value="6">6</option>
+				    <option value="7">7</option>
+				    <option value="8">8</option>
+				    <option value="9">9</option>
+				    <option value="10">10</option>
+				  </select>
+				  <span class="focus"></span>
+				</div>
+			</div>
+			<div class="value_div">
+				<p class="value">R$ 43,00</p>
+			</div>
+		</div>
+
+		<div class="item_div">
+			<div class="selection_box">
+				<!--cb=checkbox
+					ys=yakissoba-->
+				<input type="checkbox" id="cb_ys_frango" onclick="myFunction()">
+			</div>
+			<div class="item">
+				<p class="item_title">FRANGO</p>
+				<p class="item_desc">macarrão, acelga, brócolis, cenoura, pimentão vermelho ou amarelo, cebola, molho especial e carne de frango</p>
+			</div>
+			<div class="unidade_div">
+				<!-- quantity dropdown -->
+				<div class="select">
+				  <select id="dd_ys_frango">
+				    <option value="1" selected="selected">1</option>
+				    <option value="2">2</option>
+				    <option value="3">3</option>
+				    <option value="4">4</option>
+				    <option value="5">5</option>
+				    <option value="6">6</option>
+				    <option value="7">7</option>
+				    <option value="8">8</option>
+				    <option value="9">9</option>
+				    <option value="10">10</option>
+				  </select>
+				  <span class="focus"></span>
+				</div>
+			</div>
+			<div class="value_div">
+				<p class="value">R$ 41,00</p>
+			</div>
+		</div>
+
+		<div class="item_div">
+			<div class="selection_box">
+				<!--cb=checkbox
+					ys=yakissoba-->
+				<input type="checkbox" id="cb_ys_porco" onclick="myFunction()">
+			</div>
+			<div class="item">
+				<p class="item_title">PORCO</p>
+				<p class="item_desc">macarrão, acelga, brócolis, cenoura, pimentão vermelho ou amarelo, cebola, molho especial e carne de porco</p>
+			</div>
+			<div class="unidade_div">
+				<!-- quantity dropdown -->
+				<div class="select">
+				  <select id="dd_ys_porco">
+				    <option value="1" selected="selected">1</option>
+				    <option value="2">2</option>
+				    <option value="3">3</option>
+				    <option value="4">4</option>
+				    <option value="5">5</option>
+				    <option value="6">6</option>
+				    <option value="7">7</option>
+				    <option value="8">8</option>
+				    <option value="9">9</option>
+				    <option value="10">10</option>
+				  </select>
+				  <span class="focus"></span>
+				</div>
+			</div>
+			<div class="value_div">
+				<p class="value">R$ 41,00</p>
+			</div>
+		</div>
+
+		<div class="item_div section_margim">
+			<div class="selection_box">
+				<!--cb=checkbox
+					ys=yakissoba-->
+				<input type="checkbox" id="cb_ys_legumes" onclick="myFunction()">
+			</div>
+			<div class="item">
+				<p class="item_title">LEGUMES</p>
+				<p class="item_desc">macarrão, acelga, brócolis, cenoura, pimentão vermelho ou amarelo, cebola e molho especial</p>
+			</div>
+			<div class="unidade_div">
+				<!-- quantity dropdown -->
+				<div class="select">
+				  <select id="dd_ys_legumes">
+				    <option value="1" selected="selected">1</option>
+				    <option value="2">2</option>
+				    <option value="3">3</option>
+				    <option value="4">4</option>
+				    <option value="5">5</option>
+				    <option value="6">6</option>
+				    <option value="7">7</option>
+				    <option value="8">8</option>
+				    <option value="9">9</option>
+				    <option value="10">10</option>
+				  </select>
+				  <span class="focus"></span>
+				</div>
+			</div>
+			<div class="value_div">
+				<p class="value">R$ 38,00</p>
+			</div>
+		</div>
+
+		<div class="yakissoba_individual_section cardapio_section">
+			<!--<div></div>-->
+			<p style="margin-left: 3%;">YAKISSOBA INDIVIDUAL</p>
+			<p>UNID</p>
+			<p>VALOR</p>
+			
+		</div>
+
+		<div class="item_div">
+			<div class="selection_box">
+				<!--cb=checkbox
+					ysi=yakissoba individual-->
+				<input type="checkbox" id="cb_ysi_boi" onclick="myFunction()">
+			</div>
+			<div class="item">
+				<p class="item_title">BOI</p>
+				<p class="item_desc">macarrão, acelga, brócolis, cenoura, pimentão vermelho ou amarelo, cebola, molho especial e carne de 1ª</p>
+			</div>
+			<div class="unidade_div">
+				<!-- quantity dropdown -->
+				<div class="select">
+				  <select id="dd_ysi_boi">
+				    <option value="1" selected="selected">1</option>
+				    <option value="2">2</option>
+				    <option value="3">3</option>
+				    <option value="4">4</option>
+				    <option value="5">5</option>
+				    <option value="6">6</option>
+				    <option value="7">7</option>
+				    <option value="8">8</option>
+				    <option value="9">9</option>
+				    <option value="10">10</option>
+				  </select>
+				  <span class="focus"></span>
+				</div>
+			</div>
+			<div class="value_div">
+				<p class="value">R$ 25,00</p>
+			</div>
+		</div>
+
+		<div class="item_div">
+			<div class="selection_box">
+				<!--cb=checkbox
+					ys=yakissoba-->
+				<input type="checkbox" id="cb_ysi_frango" onclick="myFunction()">
+			</div>
+			<div class="item">
+				<p class="item_title">FRANGO</p>
+				<p class="item_desc">macarrão, acelga, brócolis, cenoura, pimentão vermelho ou amarelo, cebola, molho especial e carne de frango</p>
+			</div>
+			<div class="unidade_div">
+				<!-- quantity dropdown -->
+				<div class="select">
+				  <select id="dd_ysi_frango">
+				    <option value="1" selected="selected">1</option>
+				    <option value="2">2</option>
+				    <option value="3">3</option>
+				    <option value="4">4</option>
+				    <option value="5">5</option>
+				    <option value="6">6</option>
+				    <option value="7">7</option>
+				    <option value="8">8</option>
+				    <option value="9">9</option>
+				    <option value="10">10</option>
+				  </select>
+				  <span class="focus"></span>
+				</div>
+			</div>
+			<div class="value_div">
+				<p class="value">R$ 25,00</p>
+			</div>
+		</div>
+
+		<div class="item_div">
+			<div class="selection_box">
+				<!--cb=checkbox
+					ys=yakissoba-->
+				<input type="checkbox" id="cb_ysi_porco" onclick="myFunction()">
+			</div>
+			<div class="item">
+				<p class="item_title">PORCO</p>
+				<p class="item_desc">macarrão, acelga, brócolis, cenoura, pimentão vermelho ou amarelo, cebola, molho especial e carne de porco</p>
+			</div>
+			<div class="unidade_div">
+				<!-- quantity dropdown -->
+				<div class="select">
+				  <select id="dd_ysi_porco">
+				    <option value="1" selected="selected">1</option>
+				    <option value="2">2</option>
+				    <option value="3">3</option>
+				    <option value="4">4</option>
+				    <option value="5">5</option>
+				    <option value="6">6</option>
+				    <option value="7">7</option>
+				    <option value="8">8</option>
+				    <option value="9">9</option>
+				    <option value="10">10</option>
+				  </select>
+				  <span class="focus"></span>
+				</div>
+			</div>
+			<div class="value_div">
+				<p class="value">R$ 25,00</p>
+			</div>
+		</div>
+
+		<div class="item_div section_margim">
+			<div class="selection_box">
+				<!--cb=checkbox
+					ys=yakissoba-->
+				<input type="checkbox" id="cb_ysi_legumes" onclick="myFunction()">
+			</div>
+			<div class="item">
+				<p class="item_title">LEGUMES</p>
+				<p class="item_desc">macarrão, acelga, brócolis, cenoura, pimentão vermelho ou amarelo, cebola e molho especial</p>
+			</div>
+			<div class="unidade_div">
+				<!-- quantity dropdown -->
+				<div class="select">
+				  <select id="dd_ysi_legumes">
+				    <option value="1" selected="selected">1</option>
+				    <option value="2">2</option>
+				    <option value="3">3</option>
+				    <option value="4">4</option>
+				    <option value="5">5</option>
+				    <option value="6">6</option>
+				    <option value="7">7</option>
+				    <option value="8">8</option>
+				    <option value="9">9</option>
+				    <option value="10">10</option>
+				  </select>
+				  <span class="focus"></span>
+				</div>
+			</div>
+			<div class="value_div">
+				<p class="value">R$ 30,00</p>
+			</div>
+		</div>
+
+		<div class="hotsushi_section cardapio_section">
+			<!--<div></div>-->
+			<p style="margin-left: 3%;">HOT SUSHI</p>
+			<p>PEÇAS</p>
+			<p>UNID</p>
+			<p>VALOR</p>
+			
+		</div>
+
+		<div class="item_div">
+			<div class="selection_box">
+				<!--cb=checkbox
+					hs=hot sushi
+					pcs=peças
+					unt=unidade-->
+				<input type="checkbox" id="cb_hs_philadelphia" onclick="myFunction()">
+			</div>
+			<div class="item">
+				<p class="item_title">HOT PHILADELPHIA</p>
+				<p class="item_desc">cream cheese, salmão com taré e gergelim por cima.</p>
+			</div>
+			<div class="pecas_div">
+				<div class="pecas_div">
+					<div class="select">
+					  <select id="pcs_hs_philadelphia"><!--peças-->
+					    <option value="6" selected="selected">6</option>
+					    <option value="12">12</option>
+					  </select>
+					  <span class="focus"></span>
+					</div>
+				</div>
+			</div>
+			<div class="unidade_div">
+				<!-- quantity dropdown -->
+				
+				<div class="select">
+				  <select id="unt_hs_philadelphia"><!--unidade-->
+				    <option value="1" selected="selected">1</option>
+				    <option value="2">2</option>
+				    <option value="3">3</option>
+				    <option value="4">4</option>
+				    <option value="5">5</option>
+				    <option value="6">6</option>
+				    <option value="7">7</option>
+				    <option value="8">8</option>
+				    <option value="9">9</option>
+				    <option value="10">10</option>
+				  </select>
+				  <span class="focus"></span>
+				</div>
+			</div>
+			<div class="value_div">
+				<p class="value">R$ 24,00</p>
+			</div>
+		</div>
+
+		<div class="item_div">
+			<div class="selection_box">
+				<!--cb=checkbox
+					hs=hot sushi
+					pcs=peças
+					unt=unidade-->
+				<input type="checkbox" id="cb_hs_romeuejulieta" onclick="myFunction()">
+			</div>
+			<div class="item">
+				<p class="item_title">HOT ROMEU E JULIETA</p>
+				<p class="item_desc">cream cheese e goiabada.</p>
+			</div>
+			<div class="pecas_div">
+				<div class="pecas_div">
+					<div class="select">
+					  <select id="pcs_hs_romeuejulieta"><!--peças-->
+					    <option value="6" selected="selected">6</option>
+					    <option value="12">12</option>
+					  </select>
+					  <span class="focus"></span>
+					</div>
+				</div>
+			</div>
+			<div class="unidade_div">
+				<!-- quantity dropdown -->
+				
+				<div class="select">
+				  <select id="unt_hs_romeuejulieta"><!--unidade-->
+				    <option value="1" selected="selected">1</option>
+				    <option value="2">2</option>
+				    <option value="3">3</option>
+				    <option value="4">4</option>
+				    <option value="5">5</option>
+				    <option value="6">6</option>
+				    <option value="7">7</option>
+				    <option value="8">8</option>
+				    <option value="9">9</option>
+				    <option value="10">10</option>
+				  </select>
+				  <span class="focus"></span>
+				</div>
+			</div>
+			<div class="value_div">
+				<p class="value">R$ 16,00</p>
+			</div>
+		</div>
+
+		<div class="item_div">
+			<div class="selection_box">
+				<!--cb=checkbox
+					hs=hot sushi
+					pcs=peças
+					unt=unidade-->
+				<input type="checkbox" id="cb_hs_uramaki" onclick="myFunction()">
+			</div>
+			<div class="item">
+				<p class="item_title">HOT URAMAKI</p>
+				<p class="item_desc">sushi ao contrário, cream cheese, salmão com tarê e gergelim por cima.</p>
+			</div>
+			<div class="pecas_div">
+				<div class="pecas_div">
+					<div class="select">
+					  <select id="pcs_hs_uramaki"><!--peças-->
+					    <option value="12" selected="selected">12</option>
+					  </select>
+					  <span class="focus"></span>
+					</div>
+				</div>
+			</div>
+			<div class="unidade_div">
+				<!-- quantity dropdown -->
+				
+				<div class="select">
+				  <select id="unt_hs_uramaki"><!--unidade-->
+				    <option value="1" selected="selected">1</option>
+				    <option value="2">2</option>
+				    <option value="3">3</option>
+				    <option value="4">4</option>
+				    <option value="5">5</option>
+				    <option value="6">6</option>
+				    <option value="7">7</option>
+				    <option value="8">8</option>
+				    <option value="9">9</option>
+				    <option value="10">10</option>
+				  </select>
+				  <span class="focus"></span>
+				</div>
+			</div>
+			<div class="value_div">
+				<p class="value">R$ 25,00</p>
+			</div>
+		</div>
+		
+		<div class="dados">
+			<div class="dados_div">
+				<label class="desc_caixa_texto" for="nome">NOME</label>
+			    <input class="caixa_texto"  type="text" id="nome" name="nome" placeholder="">
+
+			    <label class="desc_caixa_texto"  for="celnum">TELEFONE</label>
+			    <input class="caixa_texto" type="text" id="celnum" name="celnum" placeholder="">
+
+			    <label class="desc_caixa_texto"  for="cep">CEP</label>
+			    <input class="caixa_texto" type="text" id="cep" name="cep" placeholder="">
+
+			    <label class="desc_caixa_texto"  for="cidade">CIDADE</label>
+			    <input class="caixa_texto" type="text" id="cidade" name="cidade" placeholder="">
+
+			    <label class="desc_caixa_texto"  for="rua">RUA/AVENIDA/JARDIM</label>
+			    <input class="caixa_texto" type="text" id="rua" name="rua" placeholder="">
+
+			    <label class="desc_caixa_texto"  for="numero">NÚMERO</label>
+			    <input class="caixa_texto" type="text" id="numero" name="numero" placeholder="">
+
+			    <label class="desc_caixa_texto"  for="bairro">BAIRRO</label>
+			    <input class="caixa_texto" type="text" id="bairro" name="bairro" placeholder="">
+
+			    <label class="desc_caixa_texto"  for="ref">REFERÊNCIA</label>
+			    <input class="caixa_texto" type="text" id="ref" name="ref" placeholder="">
+			</div>
+			
+		</div>
+		<div class="pedido_div">
+			<button class="pedido_button" onclick="concatenar()">Realizar pedido</button>
+		</div>
+		
+	</div>
+	
+
+	<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		function concatenar(){
+			var itens = 'Olá, gostaria de realizar um pedido!\n';
+
+			//YAKISSOBA
+			if (document.getElementById('cb_ys_misto').checked) {
+				var num = document.getElementById("dd_ys_misto").value;
+				
+				itens = itens.concat('Yakissoba Misto: x', num,"\n");
+				//alert(itens);
+	        }else{
+	        	//alert("not checked"); 
+			}
+
+			if (document.getElementById('cb_ys_boi').checked) {
+				var num = document.getElementById("dd_ys_boi").value;
+				
+				itens = itens.concat('Yakissoba Boi: x', num,"\n");
+				//alert(itens);
+	        }else{
+	        	//alert("not checked"); 
+			}
+
+			if (document.getElementById('cb_ys_frango').checked) {
+				var num = document.getElementById("dd_ys_frango").value;
+				
+				itens = itens.concat('Yakissoba Frango: x', num,"\n");
+				//alert(itens);
+	        }else{
+	        	//alert("not checked"); 
+			}
+
+			if (document.getElementById('cb_ys_porco').checked) {
+				var num = document.getElementById("dd_ys_porco").value;
+				
+				itens = itens.concat('Yakissoba Porco: x', num,"\n");
+				//alert(itens);
+	        }else{
+	        	//alert("not checked"); 
+			}
+
+			if (document.getElementById('cb_ys_legumes').checked) {
+				var num = document.getElementById("dd_ys_legumes").value;
+				
+				itens = itens.concat('Yakissoba Legumes: x', num,"\n");
+				//alert(itens);
+	        }else{
+	        	//alert("not checked"); 
+			}
+
+			//YAKISSOBA INDIVIDUAL
+			if (document.getElementById('cb_ysi_boi').checked) {
+				var num = document.getElementById("dd_ysi_boi").value;
+				
+				itens = itens.concat('Yakissoba Individual Boi: x', num,"\n");
+				//alert(itens);
+	        }else{
+	        	//alert("not checked"); 
+			}
+
+			if (document.getElementById('cb_ysi_frango').checked) {
+				var num = document.getElementById("dd_ysi_frango").value;
+				
+				itens = itens.concat('Yakissoba Individual Frango: x', num,"\n");
+				//alert(itens);
+	        }else{
+	        	//alert("not checked"); 
+			}
+
+			if (document.getElementById('cb_ysi_porco').checked) {
+				var num = document.getElementById("dd_ysi_porco").value;
+				
+				itens = itens.concat('Yakissoba Individual Porco: x', num,"\n");
+				//alert(itens);
+	        }else{
+	        	//alert("not checked"); 
+			}
+
+			if (document.getElementById('cb_ysi_legumes').checked) {
+				var num = document.getElementById("dd_ysi_legumes").value;
+				
+				itens = itens.concat('Yakissoba Individual Legumes: x', num,"\n");
+				//alert(itens);
+	        }else{
+	        	//alert("not checked"); 
+			}
+			//HOT SUSHI
+			if (document.getElementById('cb_hs_philadelphia').checked) {
+				var pcs = document.getElementById("pcs_hs_philadelphia").value;
+				var unt = document.getElementById("unt_hs_philadelphia").value;
+				
+				itens = itens.concat('HotSushi Philadelphia: x',pcs,"pcs x", unt,"unt","\n");
+				//alert(itens);
+	        }else{
+	        	//alert("not checked"); 
+			}
+
+			if (document.getElementById('cb_hs_romeuejulieta').checked) {
+				var pcs = document.getElementById("pcs_hs_romeuejulieta").value;
+				var unt = document.getElementById("unt_hs_romeuejulieta").value;
+				
+				itens = itens.concat('HotSushi Romeu e Julieta: x',pcs,"pcs x", unt,"unt","\n");
+				//alert(itens);
+	        }else{
+	        	//alert("not checked"); 
+			}
+
+			if (document.getElementById('cb_hs_uramaki').checked) {
+				var pcs = document.getElementById("pcs_hs_uramaki").value;
+				var unt = document.getElementById("unt_hs_uramaki").value;
+				
+				itens = itens.concat('HotSushi Uramaki: x',pcs,"pcs x", unt,"unt","\n");
+				//alert(itens);
+	        }else{
+	        	//alert("not checked"); 
+			}
+
+			nome = document.getElementById("nome").value;
+			celnum = document.getElementById("celnum").value;
+			cep = document.getElementById("cep").value;
+			cidade = document.getElementById("cidade").value;
+			rua = document.getElementById("rua").value;
+			numero = document.getElementById("numero").value;
+			bairro = document.getElementById("bairro").value;
+			ref = document.getElementById("ref").value;
+			itens= itens.concat("NOME: ",nome,"\n","TELEFONE: ",celnum,"\n","CEP: ",cep,"\n","CIDADE: ",cidade,"\n","RUA: ",rua,"\n","NUMERO: ",numero,"\n","BAIRRO: ",bairro,"\n","REFERENCIA: ",ref,"\n");
+			alert(itens);
+        }
+	</script>
+</body>
+</html>
