@@ -45,8 +45,7 @@
 		}
 
 		.select {
-			width: 75px;
-			height: 30px;
+			
 		  display: grid;
 		  grid-template-areas: "select";
 		  align-items: center;
@@ -155,7 +154,7 @@
 		}
 		.unidade_div{
 			display: flex;
-			width: 100%;
+			
 			align-items: center;
 		}
 		.pecas_div{
@@ -266,19 +265,23 @@
 			<div class="unidade_div">
 				<!-- quantity dropdown -->
 				<div class="select">
-				  <select id="dd_ys_misto">
-				    <option value="1" selected="selected">1</option>
-				    <option value="2">2</option>
-				    <option value="3">3</option>
-				    <option value="4">4</option>
-				    <option value="5">5</option>
-				    <option value="6">6</option>
-				    <option value="7">7</option>
-				    <option value="8">8</option>
-				    <option value="9">9</option>
-				    <option value="10">10</option>
-				  </select>
-				  <span class="focus"></span>
+				  <div class="custom-select" style="width:100%;">
+  <select>
+    <option value="0">Select car:</option>
+    <option value="1">Audi</option>
+    <option value="2">BMW</option>
+    <option value="3">Citroen</option>
+    <option value="4">Ford</option>
+    <option value="5">Honda</option>
+    <option value="6">Jaguar</option>
+    <option value="7">Land Rover</option>
+    <option value="8">Mercedes</option>
+    <option value="9">Mini</option>
+    <option value="10">Nissan</option>
+    <option value="11">Toyota</option>
+    <option value="12">Volvo</option>
+  </select>
+</div>
 				</div>
 			</div>
 			<div class="value_div">
